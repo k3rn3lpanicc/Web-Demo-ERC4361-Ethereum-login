@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+        frontend:
+                build:
+                        context: ./frontend # Path to frontend directory
+                ports:
+                        - '5000:5000' # Expose frontend on port 5000
+                environment:
+                        - REACT_APP_BACKEND_URL=http://backend:3001 # Backend URL for React to make API calls
+                depends_on:
+                        - backend # Ensure backend starts before frontend
+
+        backend:
+                build:
+                        context: ./backend # Path to backend directory
+                ports:
+                        - '3001:3001' # Expose backend on port 3001
+                environment:
+                        - NODE_ENV=production # Set Node environment to production
+                volumes:
+                        - ./backend:/app # Mount the backend directory for development purposes (optional)
